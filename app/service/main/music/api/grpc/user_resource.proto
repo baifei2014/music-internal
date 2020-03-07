@@ -1,0 +1,22 @@
+syntax = "proto3";
+package main.music;
+option go_package = "v1";
+
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+
+message ListUserInfoReq {
+	repeated int64 uid = 1 [(gogoproto.jsontag) = "uid"];
+}
+
+message ListUserInfoResp {
+	repeated List list = 1 [(gogoproto.jsontag) = "list"];
+	message List {
+		int64 uid = 1 [(gogoproto.jsontag) = "uid"];
+		string nickname = 2 [(gogoproto.jsontag) = "nickname"];
+		string avatar_url = 3 [(gogoproto.jsontag) = "avatar_url"];
+	}
+}
+
+service UserResource {
+	rpc ListUserInfo(ListUserInfoReq) returns (ListUserInfoResp);
+}

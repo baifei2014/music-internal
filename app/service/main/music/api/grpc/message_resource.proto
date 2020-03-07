@@ -1,0 +1,27 @@
+syntax = "proto3";
+package main.music;
+option go_package = "v1";
+
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+
+message MessageListReq {
+	string group_id = 1 [(gogoproto.jsontag) = "group_id"];
+	int64 page = 2 [(gogoproto.jsontag) = "page"];
+	int64 page_size = 3 [(gogoproto.jsontag) = "page_size"];
+}
+
+message MessageListResp {
+	bool more = 1 [(gogoproto.jsontag) = "more"];
+	int64 current_page = 2 [(gogoproto.jsontag) = "current_page"];
+	repeated List list = 3 [(gogoproto.jsontag) = "list"];
+	message List {
+		int64 from_uid = 1 [(gogoproto.jsontag) = "from_uid"];
+		int64 to_uid = 2 [(gogoproto.jsontag) = "to_uid"];
+		string content = 3 [(gogoproto.jsontag) = "content"];
+	}
+}
+
+service MessageResource {
+	rpc MessageList(MessageListReq) returns (MessageListResp);
+}
+

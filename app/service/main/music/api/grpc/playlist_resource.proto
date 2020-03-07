@@ -1,0 +1,49 @@
+syntax = "proto3";
+package main.music;
+option go_package = "v1";
+
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+
+message UserPlaylistGetReq {
+	int64 user_id = 1 [(gogoproto.jsontag) = "user_id"];
+	int64 page = 2 [(gogoproto.jsontag) = "page"];
+	int64 page_size = 3 [(gogoproto.jsontag) = "page_size"];
+}
+
+message UserPlaylistGetResp {
+	int64 current_page = 1 [(gogoproto.jsontag) = "current_page"];
+	int64 total_count = 2 [(gogoproto.jsontag) = "total_count"];
+	repeated Playlist playlist = 3 [(gogoproto.jsontag) = "playlist"];
+	message Playlist {
+		int64 id = 1 [(gogoproto.jsontag) = "id"];
+		string name = 2 [(gogoproto.jsontag) = "name"];
+		string cover_img_url = 3 [(gogoproto.jsontag) = "cover_img_url"];
+		int64 creator_uid = 4 [(gogoproto.jsontag) = "creator_uid"];
+		int64 play_count = 5 [(gogoproto.jsontag) = "play_count"];
+		int64 comment_count = 6 [(gogoproto.jsontag) = "comment_count"];
+		int64 share_count = 7 [(gogoproto.jsontag) = "share_count"];
+		int64 track_count = 8 [(gogoproto.jsontag) = "track_count"];
+	}
+}
+
+message PlaylistDetailGetReq {
+	int64 id = 1 [(gogoproto.jsontag) = "id"];
+}
+
+message PlaylistDetailGetResp {
+	int64 id = 1 [(gogoproto.jsontag) = "id"];
+	string name = 2 [(gogoproto.jsontag) = "name"];
+	string cover_img_url = 3 [(gogoproto.jsontag) = "cover_img_url"];
+	int64 creator_uid = 4 [(gogoproto.jsontag) = "creator_uid"];
+	int64 play_count = 5 [(gogoproto.jsontag) = "play_count"];
+	int64 comment_count = 6 [(gogoproto.jsontag) = "comment_count"];
+	int64 share_count = 7 [(gogoproto.jsontag) = "share_count"];
+	int64 track_count = 8 [(gogoproto.jsontag) = "track_count"];
+	int64 subscribed_count = 9 [(gogoproto.jsontag) = "subscribed_count"];
+	repeated int64 sids = 10 [(gogoproto.jsontag) = "sids"];
+}
+
+service PlaylistResource {
+	rpc UserPlaylistGet(UserPlaylistGetReq) returns (UserPlaylistGetResp);
+	rpc PlaylistDetailGet(PlaylistDetailGetReq) returns (PlaylistDetailGetResp);
+}

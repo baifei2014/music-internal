@@ -1,0 +1,18 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "dao.go",
+        "user_resource.go",
+    ],
+    importpath = "near/app/service/live/resource/dao",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//app/service/live/resource/conf:go_default_library",
+        "//app/service/live/resource/model:go_default_library",
+        "//library/database/orm:go_default_library",
+        "//library/database/sql:go_default_library",
+        "//vendor/github.com/jinzhu/gorm:go_default_library",
+    ],
+)

@@ -1,0 +1,130 @@
+syntax = "proto3";
+package main.music;
+option go_package = "v1";
+
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+
+// 请求单个资源
+message GetDetailReq {
+	// 资源id
+	repeated int64 sids = 1 [(gogoproto.moretags) = 'form:"sids" validate:"required"'];
+}
+
+// 返回单个资源
+message GetDetailResp {
+	repeated Song songs = 1 [(gogoproto.jsontag) = "songs"];
+	repeated Privilege privileges = 2 [(gogoproto.jsontag) = "privileges"];
+
+	message Song {
+		int64 id = 1 [(gogoproto.jsontag) = "id"];
+		string name = 2 [(gogoproto.jsontag) = "name"];
+		int64 duration = 3 [(gogoproto.jsontag) = "duration"];
+		string url = 4 [(gogoproto.jsontag) = "url"];
+	}
+
+	message Privilege {
+		int64 id = 1 [(gogoproto.jsontag) = "id"];
+		int64 maxbr = 2 [(gogoproto.jsontag) = "maxbr"];
+		int64 st = 3 [(gogoproto.jsontag) = "st"];
+	}
+}
+
+// 请求单个资源
+message ListSongGetReq {
+	// 资源id
+	repeated int64 sids = 1 [(gogoproto.moretags) = 'form:"sids" validate:"required"'];
+}
+
+// 返回单个资源
+message ListSongGetResp {
+	repeated Song songs = 1 [(gogoproto.jsontag) = "songs"];
+	repeated Privilege privileges = 2 [(gogoproto.jsontag) = "privileges"];
+
+	message Song {
+		int64 id = 1 [(gogoproto.jsontag) = "id"];
+		string name = 2 [(gogoproto.jsontag) = "name"];
+		int64 duration = 3 [(gogoproto.jsontag) = "duration"];
+		string url = 4 [(gogoproto.jsontag) = "url"];
+	}
+
+	message Privilege {
+		int64 id = 1 [(gogoproto.jsontag) = "id"];
+		int64 maxbr = 2 [(gogoproto.jsontag) = "maxbr"];
+		int64 st = 3 [(gogoproto.jsontag) = "st"];
+	}
+}
+
+// 请求单个资源
+message GetAlbumReq {
+	// 资源id
+	repeated int64 sids = 1 [(gogoproto.moretags) = 'form:"sids" validate:"required"'];
+}
+
+message GetAlbumResp {
+	repeated Album albums = 1 [(gogoproto.jsontag) = "albums"];
+	message Album {
+		int64 id = 1 [(gogoproto.jsontag) = "id"];
+		int64 sid = 2 [(gogoproto.jsontag) = "sid"];
+		string name = 3 [(gogoproto.jsontag) = "name"];
+		string pic_url = 4 [(gogoproto.jsontag) = "pic_url"];
+	}
+}
+
+message GetArtistReq {
+	// 资源id
+	repeated int64 sids = 1 [(gogoproto.moretags) = 'form:"sids" validate:"required"'];
+}
+
+message GetArtistResp {
+	repeated Artist artists = 1 [(gogoproto.jsontag) = "artists"];
+	message Artist {
+		int64 id = 1 [(gogoproto.jsontag) = "id"];
+		int64 sid = 2 [(gogoproto.jsontag) = "sid"];
+		string name = 3 [(gogoproto.jsontag) = "name"];
+	}
+}
+
+// 请求获取单个歌单详情
+message GetPlaylistSingleReq {
+	int64 id = 1 [(gogoproto.jsontag) = "id"];
+}
+
+// 返回单个歌单详情
+message GetPlaylistSingleResp {
+	int64 id = 1 [(gogoproto.jsontag) = "id"];
+	string name = 2 [(gogoproto.jsontag) = "name"];
+	string cover_img_url = 3 [(gogoproto.jsontag) = "cover_img_url"];
+	int64 play_count = 4 [(gogoproto.jsontag) = "play_count"];
+	int64 comment_count = 5 [(gogoproto.jsontag) = "comment_count"];
+	int64 share_count = 6 [(gogoproto.jsontag) = "share_count"];
+	repeated int64 sids = 7 [(gogoproto.jsontag) = "sids"];
+}
+
+// 请求查询歌单列表
+message PlaylistGetListReq {
+
+}
+
+message PlaylistGetListResp {
+	repeated Playlist playlists = 1 [(gogoproto.jsontag) = "playlists"];
+	message Playlist {
+		int64 id = 1 [(gogoproto.jsontag) = "id"];
+		string name = 2 [(gogoproto.jsontag) = "name"];
+		string cover_img_url = 3 [(gogoproto.jsontag) = "cover_img_url"];
+	}
+}
+
+service SongResource {
+	// Query请求单个资源
+	rpc SongGetDetail(GetDetailReq) returns (GetDetailResp);
+
+	rpc ArtistGet(GetArtistReq) returns (GetArtistResp);
+
+	rpc AlbumGet(GetAlbumReq) returns (GetAlbumResp);
+
+	rpc PlaylistGetSingle(GetPlaylistSingleReq) returns (GetPlaylistSingleResp);
+
+	// 获取歌单列表资源
+	rpc PlaylistGetList(PlaylistGetListReq) returns (PlaylistGetListResp);
+	rpc ListSongGet(ListSongGetReq) returns (ListSongGetResp);
+}

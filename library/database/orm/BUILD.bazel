@@ -1,0 +1,9 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["orm.go"],
+    importpath = "near/library/database/orm",
+    visibility = ["//visibility:public"],
+    deps = ["//vendor/github.com/jinzhu/gorm:go_default_library"],
+)

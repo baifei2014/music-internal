@@ -1,0 +1,13 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["conf.go"],
+    importpath = "near/app/service/live/resource/conf",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//library/database/orm:go_default_library",
+        "//library/database/sql:go_default_library",
+        "//vendor/github.com/BurntSushi/toml:go_default_library",
+    ],
+)

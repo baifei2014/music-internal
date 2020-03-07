@@ -1,0 +1,23 @@
+syntax = "proto3";
+package main.music;
+option go_package = "v1";
+
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+
+message FriendlistInfoGetReq {
+	int64 uid = 1 [(gogoproto.jsontag) = "uid"];
+}
+
+message FriendlistInfoGetResp {
+	repeated List list = 1 [(gogoproto.jsontag) = "list"];
+	message List {
+		int64 uid = 1 [(gogoproto.jsontag) = "uid"];
+		string group_id = 2 [(gogoproto.jsontag) = "group_id"];
+		string name = 3 [(gogoproto.jsontag) = "name"];
+		string avatar_url = 4 [(gogoproto.jsontag) = "avatar_url"];
+	}
+}
+
+service FriendResource {
+	rpc FriendlistInfoGet(FriendlistInfoGetReq) returns (FriendlistInfoGetResp);
+}

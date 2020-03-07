@@ -1,0 +1,23 @@
+syntax = "proto3";
+package live.resource.v1;
+option go_package = "v1";
+
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+
+// 请求单个资源
+message QueryReq {
+	// 资源id
+	int32 uid = 1 [(gogoproto.moretags) = 'form:"uid" validate:"required"'];
+}
+
+// 返回单个资源
+message QueryResp {
+	int32 id = 1 [(gogoproto.jsontag) = "id"];
+	int32 uid = 2 [(gogoproto.jsontag) = "uid"];
+	string username = 3 [(gogoproto.jsontag) = "username"];
+}
+
+service UserResource {
+	// Query请求单个资源
+	rpc Query(QueryReq) returns (QueryResp);
+}

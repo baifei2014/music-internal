@@ -1,0 +1,26 @@
+syntax = "proto3";
+package live.resource.v1;
+option go_package = "v1";
+
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+
+// 请求列表
+message BannerListReq {
+	int32 page = 1 [(gogoproto.moretags) = 'form:"page"'];
+	int32 page_size = 2 [(gogoproto.moretags) = 'form:"page_size"'];
+}
+
+// 返回资源列表
+message BannerListResp {
+	int32 currentPage = 1 [(gogoproto.jsontag) = "currentPage"];
+	int32 totalCount = 2 [(gogoproto.jsontag) = "totalCount"];
+	repeated List list = 3 [(gogoproto.jsontag) = "list"];
+	message List {
+		string pic = 1 [(gogoproto.jsontag) = "pic"];
+	}
+}
+
+service BannerResource {
+	// Query请求单个资源
+	rpc List(BannerListReq) returns (BannerListResp);
+}

@@ -1,0 +1,15 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["http.go"],
+    importpath = "near/app/live/server/http",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//app/live/api/http/v1:go_default_library",
+        "//app/live/service/v1:go_default_library",
+        "//library/log:go_default_library",
+        "//vendor/github.com/gin-gonic/gin:go_default_library",
+        "//vendor/github.com/pkg/errors:go_default_library",
+    ],
+)
